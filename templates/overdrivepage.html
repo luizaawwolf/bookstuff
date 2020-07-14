@@ -9,7 +9,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
-        <title>Never Fully Booked</title>
+        <title>NeverFullyBooked - Overdrive Tool</title>
 
         <style>
           body{
@@ -23,6 +23,15 @@
             font-size: 96px;
             line-height: 121px;
             letter-spacing: 0.1em;
+
+            color: #2D3142;
+          }
+          h2{
+            font-family: 'Oxygen';
+            font-style: italic;
+            font-size: 50px;
+            /*line-height: 121px;
+            letter-spacing: 0.1em;*/
 
             color: #2D3142;
           }
@@ -144,11 +153,12 @@
         <div class="container">
             <div class="row mx-auto">
                 <h1 class="text-center">NeverFullyBooked</h1>
+                <h2 class="text-center">OverDrive Tool</h2>
             </div>
 
             <div class="row mx-auto">
               <div class="col-md-12 text-center">
-                <form action="/" method="POST">
+                <form action="/overdrive" method="POST">
                   <label for="User ID"></label>
                   <input
                     type="text"
@@ -157,10 +167,22 @@
                     id="search-box" required
                   />
                   <input type="submit" value="Search" id="calc_btn" /> </br> </br>
+                  <input
+                    type="text"
+                    placeholder="Overdrive url (e.g. https://bpl.overdrive.com)"
+                    name="lib_url"
+                    id="lib_url" required
+                  />
                   <input type="checkbox" name="toread" value="1">
                   <label for="toread" style="margin-right:30px;">To-Read Shelf</label>
                   <input type="checkbox" name="read" value="1">
-                  <label for="read">Read Shelf</label>
+                  <label for="read">Read Shelf</label> </br> </br>
+                  <input type="checkbox" name="available" value="1">
+                  <label for="available">Search only available books</label>
+                  <input type="checkbox" name="audiobooks" value="1">
+                  <label for="audiobooks">Audiobooks</label>
+                  <input type="checkbox" name="ebooks" value="1">
+                  <label for="ebooks">E-books</label>
                 </form>
               </div>
           </div>
@@ -178,8 +200,8 @@
         <div class="row text-center">
           <h3>{{successes}}</h3>
           {% if books %}
-              <h3>Click on the images to be redirected to Book Outlet</h3>
-              <p style="font-family:'Oxygen'">Duplicate images mean there are multiple versions on Book Outlet (e.g. hardcover and softcover, scratch-and-dent, etc)</p>
+              <h3>Click on the images to be redirected to Overdrive</h3>
+              <p style="font-family:'Oxygen'">Duplicate images mean there are multiple versions on Overdrive (e.g. eBook, audiobook, etc)</p>
           {% endif %}
         </div>
 
@@ -200,7 +222,11 @@
                 </div>
                 <div class="right">
                   <p class="author">{{book[0]}}</p>
-                  <p class="price">{{book[4]}}</p>
+                  {% if book[4] %}
+                    <p class="price">Available</p>
+                  {% else %}
+                    <p class="price">Not Available</p>
+                  {% endif %}
                 </div>
               </div>
             </div>
